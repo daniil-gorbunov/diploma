@@ -1,31 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {
-  NgModule,
-  ApplicationRef
-} from '@angular/core';
-import {
-  removeNgStyles,
-  createNewHosts,
-  createInputTransfer
-} from '@angularclass/hmr';
-import {
-  RouterModule,
-  PreloadAllModules
-} from '@angular/router';
+import { NgModule, ApplicationRef } from '@angular/core';
+import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import { RouterModule, PreloadAllModules } from '@angular/router';
+import { SharedModule } from './shared';
 
-/*
- * Platform and Environment providers/directives/pipes
- */
+// Platform and Environment providers/directives/pipes
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
-// App is our top level component
+
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
-import { AboutComponent } from './about';
+import { OrderCreatorComponent } from './order-creator';
+import { CafeCardComponent } from './order-creator/caffee-card';
+import { OrderManagerComponent } from './order-manager';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 
@@ -51,7 +42,9 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
+    OrderCreatorComponent,
+    CafeCardComponent,
+    OrderManagerComponent,
     HomeComponent,
     NoContentComponent,
     XLargeDirective
@@ -60,7 +53,8 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+    SharedModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -68,6 +62,12 @@ type StoreType = {
   ]
 })
 export class AppModule {
+
+  public static hmrAfterDestroy(store: StoreType) {
+    // display new elements
+    store.disposeOldHosts();
+    delete store.disposeOldHosts;
+  }
 
   constructor(
     public appRef: ApplicationRef,
@@ -95,20 +95,13 @@ export class AppModule {
   public hmrOnDestroy(store: StoreType) {
     const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     // save state
-    const state = this.appState._state;
-    store.state = state;
+    store.state = this.appState._state;
     // recreate root elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values
     store.restoreInputValues  = createInputTransfer();
     // remove styles
     removeNgStyles();
-  }
-
-  public hmrAfterDestroy(store: StoreType) {
-    // display new elements
-    store.disposeOldHosts();
-    delete store.disposeOldHosts;
   }
 
 }

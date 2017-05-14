@@ -5,24 +5,12 @@ import {
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'about',
+  selector: 'order-creator',
   styles: [`
   `],
-  template: `
-    <h1>About</h1>
-    <div>
-      For hot module reloading run
-      <pre>npm run start:hmr</pre>
-    </div>
-    <div>
-      <h3>
-        patrick@AngularClass.com
-      </h3>
-    </div>
-    <pre>this.localState = {{ localState | json }}</pre>
-  `
+  templateUrl: './order-creator.component.html',
 })
-export class AboutComponent implements OnInit {
+export class OrderCreatorComponent implements OnInit {
 
   public localState: any;
   constructor(
