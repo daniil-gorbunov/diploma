@@ -1,0 +1,12 @@
+<md-card>
+  <md-card-header>
+    <md-card-title>{{cafe.name}}</md-card-title>
+    <md-card-subtitle>{{cafe.phone}}</md-card-subtitle>
+  </md-card-header>
+  <img class="main-image" md-card-image src="{{cafe.logo}}" alt="{{cafe.name}}">
+  <md-card-actions>
+    <button
+      md-raised-button
+      [routerLink]=" ['./cafe-menu'] " [queryParams]="{ cafeId: cafe.id }">Заказать</button>
+  </md-card-actions>
+</md-card>

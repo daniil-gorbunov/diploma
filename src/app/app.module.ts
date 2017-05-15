@@ -14,8 +14,9 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
+import { CafeCardComponent } from './order-creator/cafe-card';
+import { CafeMenuComponent } from './order-creator/cafe-menu';
 import { OrderCreatorComponent } from './order-creator';
-import { CafeCardComponent } from './order-creator/caffee-card';
 import { OrderManagerComponent } from './order-manager';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
@@ -42,8 +43,9 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    OrderCreatorComponent,
     CafeCardComponent,
+    CafeMenuComponent,
+    OrderCreatorComponent,
     OrderManagerComponent,
     HomeComponent,
     NoContentComponent,

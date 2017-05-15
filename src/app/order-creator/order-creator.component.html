@@ -1,2 +1,6 @@
 <h1>Новый заказ</h1>
-<md-card *ngFor="let cafe of localState.cafes">cafe</md-card>
+<div fxLayout="row" fxLayoutAlign="space-between stretch">
+  <div class="cafe-card-container" fxFlex="50" *ngFor="let cafe of cafes">
+    <cafe-card [cafe]="cafe"></cafe-card>
+  </div>
+</div>
