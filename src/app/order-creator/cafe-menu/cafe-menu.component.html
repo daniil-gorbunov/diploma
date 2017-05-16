@@ -1,5 +1,15 @@
 <h1>Меню {{cafeId}}</h1>
 <md-list>
-  <md-list-item *ngFor="let dish of dishes">{{dish.name}}</md-list-item>
+  <md-list-item *ngFor="let dish of dishes">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center">
+      <div fxFlex="70%">
+        {{dish.name}}
+      </div>
+      <div fxFlex="10%">
+        <button md-icon-button (click)="remove(dish)"><md-icon>remove</md-icon></button>
+        {{dish.quantity}}
+        <button md-icon-button (click)="add(dish)"><md-icon>add</md-icon></button>
+      </div>
+    </div>
+  </md-list-item>
 </md-list>
-

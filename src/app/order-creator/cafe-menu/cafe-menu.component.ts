@@ -3,6 +3,7 @@ import {
   OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'cafe-menu',
@@ -23,13 +24,24 @@ export class CafeMenuComponent implements OnInit {
     this.route
       .queryParams
       .subscribe((params) => {
-        // Defaults to 0 if no query param provided.
         this.cafeId = params.cafeId || 0;
       });
-    console.log(this.route.data);
 
     this.asyncDataWithWebpack();
   }
+
+  public add(dish) {
+    if (dish.quantity < 3){
+      dish.quantity++;
+    }
+  }
+
+  public remove(dish) {
+    if (dish.quantity > 0){
+      dish.quantity--;
+    }
+  }
+
   private asyncDataWithWebpack() {
     setTimeout(() => {
 
@@ -37,6 +49,7 @@ export class CafeMenuComponent implements OnInit {
         .then((dishes) => {
           console.log('async mockData', dishes);
           this.dishes = dishes;
+          _.each(this.dishes, (dish) => _.set(dish, 'quantity', 0));
         });
 
     });
