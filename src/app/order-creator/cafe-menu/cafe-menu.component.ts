@@ -31,13 +31,13 @@ export class CafeMenuComponent implements OnInit {
   }
 
   public add(dish) {
-    if (dish.quantity < 3){
+    if (dish.quantity < 3) {
       dish.quantity++;
     }
   }
 
   public remove(dish) {
-    if (dish.quantity > 0){
+    if (dish.quantity > 0) {
       dish.quantity--;
     }
   }
