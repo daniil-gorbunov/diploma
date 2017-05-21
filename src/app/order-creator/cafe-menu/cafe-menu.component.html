@@ -1,14 +1,40 @@
-<h1>Меню {{cafeId}}</h1>
+<h1>Меню {{cafe && cafe.name}}</h1>
 <md-list>
-  <md-list-item *ngFor="let dish of dishes">
-    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center">
-      <div fxFlex="70%">
-        {{dish.name}}
+  <div *ngFor="let category of arrangedDishes">
+    <h3 md-subheader>{{category.category}}</h3>
+    <md-list-item class="dish-item" *ngFor="let dish of category.dishes">
+      <div fxLayout="row" fxFlex="70%" fxLayoutAlign="space-between center">
+        <div fxFlex="40%">
+          {{dish.name}} ({{dish.weight}})
+        </div>
+        <div fxFlex="20%">
+          {{dish.description}}
+        </div>
+        <div fxFlex="10%">
+          <b>{{dish.price | number:'1.2-2'}}</b> руб.
+        </div>
+        <div fxFlex="10%">
+          <button md-icon-button color="accent" (click)="remove(dish)">
+            <md-icon>remove</md-icon>
+          </button>
+          <span>{{dish.quantity}}</span>
+          <button md-icon-button color="accent" (click)="add(dish)">
+            <md-icon>add</md-icon>
+          </button>
+        </div>
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
+  </div>
+  <md-list-item>
+    <div fxLayout="row" fxLayoutAlign="end center" fxFlex="70%">
+      <div fxFlex="20%">
+        <span>Итого: <b>{{getTotalPrice() | number:'1.2-2' }}</b> руб.</span>
       </div>
       <div fxFlex="10%">
-        <button md-icon-button (click)="remove(dish)"><md-icon>remove</md-icon></button>
-        {{dish.quantity}}
-        <button md-icon-button (click)="add(dish)"><md-icon>add</md-icon></button>
+        <button md-raised-button color="primary">
+          <md-icon>move_to_inbox</md-icon> Отправить заказ
+        </button>
       </div>
     </div>
   </md-list-item>

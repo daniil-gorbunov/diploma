@@ -2,6 +2,8 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import { Cafe } from './cafe.model';
+import { CafeService } from './cafe.service';
 
 @Component({
   selector: 'order-creator',
@@ -11,23 +13,23 @@ import {
     }
   `],
   templateUrl: './order-creator.component.html',
+  providers: [CafeService],
 })
 export class OrderCreatorComponent implements OnInit {
 
-  public cafes: any[];
+  public cafes: Cafe[];
 
-  public ngOnInit() {
-    this.asyncDataWithWebpack();
+  constructor(
+    private cafeService: CafeService
+  ) {}
+
+  public ngOnInit(): void {
+    this.loadCafes();
   }
 
-  private asyncDataWithWebpack() {
-    setTimeout(() => {
-
-      System.import('../../assets/mock-data/mock-cafe.json')
-        .then((cafes) => {
-          this.cafes = cafes;
-        });
-
-    });
+  private loadCafes(): void {
+    this.cafeService.getCafes()
+      .subscribe((cafes: Cafe[]) => this.cafes = cafes);
   }
+
 }
