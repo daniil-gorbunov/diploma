@@ -4,20 +4,19 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+
 import { Cafe } from '../cafe.model';
-import { Dish } from './dish.model';
+import { Dish } from './models';
+import { Order } from '../../order-manager/models';
 import { DishService } from './dish.service';
 import { CafeService } from '../cafe.service';
+import { OrderService } from '../../order-manager/order.service';
 
 @Component({
   selector: 'cafe-menu',
-  styles: [`
-    .dish-item:hover {
-      background-color: aliceblue;
-    }
-  `],
+  styleUrls: ['styles.scss'],
   templateUrl: './cafe-menu.component.html',
-  providers: [CafeService, DishService],
+  providers: [CafeService, DishService, OrderService],
 })
 export class CafeMenuComponent implements OnInit {
 
@@ -25,11 +24,13 @@ export class CafeMenuComponent implements OnInit {
   public dishes: Dish[];
   public cafe: Cafe;
   public cafeId: number;
+  public comment: string = '';
 
   constructor(
     public route: ActivatedRoute,
     private cafeService: CafeService,
-    private dishService: DishService
+    private dishService: DishService,
+    private orderService: OrderService
   ) {}
 
   public ngOnInit(): void {
@@ -60,6 +61,34 @@ export class CafeMenuComponent implements OnInit {
       return sum + dish.price * dish.quantity;
     }
     return +_.reduce(this.dishes, sum, 0);
+  }
+
+  public saveOrder() {
+    const params = {
+      cafe: {
+        pk: this.cafeId,
+      },
+      comment: this.comment,
+      user: {
+        pk: 1,
+      },
+      dishes: _.chain(this.dishes)
+        .filter((dish) => dish.quantity > 0)
+        .map((dish) => {
+          return {
+            dish: {
+              pk: dish.id,
+            },
+            price: dish.price,
+            quantity: dish.quantity,
+          };
+        })
+        .value(),
+    };
+    this.orderService.saveOrder(params)
+      .subscribe(
+        (respOrder: Order) => console.log(respOrder)
+      );
   }
 
   private loadCafe(cafeId: number): void {

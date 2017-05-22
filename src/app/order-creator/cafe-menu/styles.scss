@@ -1,0 +1,24 @@
+.menu-container {
+  margin-bottom: 300px;
+}
+
+.dish-item:hover {
+  background-color: aliceblue;
+}
+
+.dish-item.ordered {
+  background-color: #ede7f6;
+}
+
+.dish-description {
+  font-size: 0.8em;
+  color: #616161;
+}
+
+.result-row {
+  padding-top: 50px;
+}
+
+.result-row textarea {
+  resize: none;
+}

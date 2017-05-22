@@ -1,29 +1,34 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import {  Http, Response, URLSearchParams } from '@angular/http';
+import {  Headers, Http, RequestOptions, Response, URLSearchParams } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { Cafe } from './cafe.model';
+import { Order, OrderDish } from './models';
 import { API } from '../constants';
 
 @Injectable()
-export class CafeService {
-  private apiUrl = `${API.ENDPOINT}${API.CAFE}`;
+export class OrderService {
+  private apiUrl = `${API.ENDPOINT}${API.ORDER}`;
 
   constructor (private http: Http) {}
 
-  public getCafes(params: object = {}): Observable<Cafe[]> {
+  public getOrders(params: object = {}): Observable<Order[]> {
     return this.http.get(this.apiUrl, {search: this.convertParams(params)})
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  public getCafe(id: number): Observable<Cafe> {
-    const params = {id};
-    return this.http.get(this.apiUrl, {search: this.convertParams(params)})
+  public saveOrder(params = {}): Observable<Order> {
+    const headers: Headers = new Headers({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': 'true',
+    });
+    const options: RequestOptions = new RequestOptions({ headers });
+
+    return this.http.post(this.apiUrl, params, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -52,5 +57,4 @@ export class CafeService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
 }

@@ -6,19 +6,17 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { Cafe } from './cafe.model';
-import { API } from '../constants';
-
-import { Dish } from './dish.model';
+import { API } from '../../constants';
+import { Dish } from './models';
 
 @Injectable()
 export class DishService {
-  private dishUrl = `${API.ENDPOINT}${API.DISH}`;
+  private apiUrl = `${API.ENDPOINT}${API.DISH}`;
 
   constructor (private http: Http) {}
 
   public getDishes(params: object = {}): Observable<Dish[]> {
-    return this.http.get(this.dishUrl, {search: this.convertParams(params)})
+    return this.http.get(this.apiUrl, {search: this.convertParams(params)})
       .map(this.extractData)
       .catch(this.handleError);
   }

@@ -1,9 +1,6 @@
-class DishCategory {
-  public id: number;
-  public name: string;
-}
+import { DishCategory } from './dish-category.model';
 
-class Dish {
+export class Dish {
   public id: number;
   public name: string;
   public weight: string;
@@ -13,8 +10,3 @@ class Dish {
   public quantity: number;
   public cafeId: number;
 }
-
-export {
-  Dish,
-  DishCategory,
-};
