@@ -24,7 +24,7 @@ export class CafeService {
   public getCafe(id: number): Observable<Cafe> {
     const params = {id};
     return this.http.get(this.apiUrl, {search: this.convertParams(params)})
-      .map(this.extractData)
+      .map(this.extractCafe)
       .catch(this.handleError);
   }
 
@@ -33,6 +33,11 @@ export class CafeService {
     _.each(params, (value, param) => urlParams.set(param, value));
 
     return urlParams;
+  }
+
+  private extractCafe(res: Response) {
+    const body = res.json();
+    return body.objects[0] || {};
   }
 
   private extractData(res: Response) {

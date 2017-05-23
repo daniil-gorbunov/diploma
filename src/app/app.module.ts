@@ -18,6 +18,8 @@ import { CafeCardComponent } from './order-creator/cafe-card';
 import { CafeMenuComponent } from './order-creator/cafe-menu';
 import { OrderCreatorComponent } from './order-creator';
 import { OrderManagerComponent } from './order-manager';
+import { OrderCardComponent } from './order-manager/order-card';
+
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 
@@ -47,6 +49,7 @@ type StoreType = {
     CafeMenuComponent,
     OrderCreatorComponent,
     OrderManagerComponent,
+    OrderCardComponent,
     HomeComponent,
     NoContentComponent,
     XLargeDirective

@@ -10,5 +10,10 @@
       color="primary"
       [routerLink]=" ['../cafe-menu'] "
       [queryParams]="{ cafeId: cafe.id }">Заказать</button>
+    <button
+      md-raised-button
+      color="accent"
+      [routerLink]=" ['../order-manager'] "
+      [queryParams]="{ cafeId: cafe.id }">Менеджер заказов</button>
   </md-card-actions>
 </md-card>

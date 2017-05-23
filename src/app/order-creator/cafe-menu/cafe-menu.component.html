@@ -30,7 +30,7 @@
   </md-list>
   <div class="result-row">
     <md-input-container fxFlex="50%">
-      <textarea mdInput placeholder="Комментарий">{{comment}}</textarea>
+      <textarea mdInput placeholder="Комментарий" [(ngModel)]="comment"></textarea>
     </md-input-container>
     <span fxFlex="10%">Итого: <b>{{getTotalPrice() | number:'1.2-2' }}</b> руб.</span>
     <button md-raised-button color="primary" fxFlex="10%" (click)="saveOrder()">

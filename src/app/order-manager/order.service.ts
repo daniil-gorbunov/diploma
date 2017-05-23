@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { Order, OrderDish } from './models';
+import { Order } from './models';
 import { API } from '../constants';
 
 @Injectable()
@@ -21,15 +21,14 @@ export class OrderService {
       .catch(this.handleError);
   }
 
-  public saveOrder(params = {}): Observable<Order> {
+  public saveOrder(params = {}): Observable<boolean> {
     const headers: Headers = new Headers({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': 'true',
     });
     const options: RequestOptions = new RequestOptions({ headers });
 
     return this.http.post(this.apiUrl, params, options)
-      .map(this.extractData)
+      .map(this.checkSuccess)
       .catch(this.handleError);
   }
 
@@ -38,6 +37,10 @@ export class OrderService {
     _.each(params, (value, param) => urlParams.set(param, value));
 
     return urlParams;
+  }
+
+  private checkSuccess(res: Response) {
+    return res.ok;
   }
 
   private extractData(res: Response) {

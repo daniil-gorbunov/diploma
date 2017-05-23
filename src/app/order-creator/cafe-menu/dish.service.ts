@@ -17,7 +17,7 @@ export class DishService {
 
   public getDishes(params: object = {}): Observable<Dish[]> {
     return this.http.get(this.apiUrl, {search: this.convertParams(params)})
-      .map(this.extractData)
+      .map(this.extractDishes)
       .catch(this.handleError);
   }
 
@@ -26,6 +26,14 @@ export class DishService {
     _.each(params, (value, param) => urlParams.set(param, value));
 
     return urlParams;
+  }
+
+  private extractDishes(res: Response) {
+    const body = res.json();
+    const objects = body.objects || {};
+    return _.map(
+      objects, (obj) => _.extend(obj, {quantity: 0})
+    );
   }
 
   private extractData(res: Response) {

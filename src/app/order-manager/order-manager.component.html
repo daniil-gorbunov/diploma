@@ -1,1 +1,6 @@
-<h1>Менеджер заказов</h1>
+<h1>Менеджер заказов {{cafe && cafe.name}}</h1>
+<div fxLayout="row" fxLayoutAlign="space-between stretch">
+  <div class="cafe-card-container" fxFlex="50%" *ngFor="let order of orders">
+    <order-card [order]="order"></order-card>
+  </div>
+</div>

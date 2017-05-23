@@ -1,0 +1,13 @@
+<md-card>
+  <md-card-header>
+    <md-card-title>{{order.user.first_name}} {{order.user.last_name}}</md-card-title>
+    <md-card-subtitle>{{order.user.email}}</md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <md-list>
+      <md-list-item *ngFor="let dish of order.dishes">
+        <span>{{dish.name}} {{dish.price}}</span>
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
